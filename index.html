@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Netflix - goorm pbl assignment</title>
+
+    <!-- reset.css -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reset-css@5.0.2/reset.min.css">
+
+    <!-- google material icons -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+    <!-- Pretendard Font -->
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css" />
+
+    <style>
+        :root {
+            --brand-white: #FFF;
+            --brand-black: #141515;
+            --brand-grayscale-300: #D7D7D7;
+            --brand-grayscale-400: #B7B6B5;
+            --brand-color: #A82319;
+        }
+    </style>
+    <style>
+        /* reset */
+        *:not(.material-icons) {font-family: 'Pretendard', 'Apple SD Gothic Neo', 'san-serif'!important; box-sizing: border-box;}
+        a {color: initial; text-decoration: none;}
+        button {background-color: transparent; border: none; padding: 0px; cursor: pointer;}
+        .material-icons {color: var(--brand-white);}
+        .blind {position: absolute; width: 1px; height: 1px; clip: rect(1px, 1px, 1px, 1px); overflow: hidden;}
+        body {position: relative; display: block; width: 100%; min-width: 500px; min-height: 100vh; color: var(--brand-white); background-color: var(--brand-black); overflow-x: auto; overflow-y: auto;}
+        /* reset */
+    </style>
+    <style>
+        /* header */
+        .area-header {position: absolute; z-index: 9999; top: 0px; left: 0px; right: 0px; display: flex; flex-flow: row nowrap; justify-content: space-between; align-items: center; width: 100%; min-width: 500px; height: 68px; padding: 0px 60px; background: linear-gradient(0deg, rgba(20,21,21,0) 0%, rgba(20,21,21,0.8) 100%);}
+        .area-header__leftContainer {display: flex; flex-flow: row nowrap; justify-content: flex-start; align-items: center; margin-right: 40px;}
+        .area-header__rightContainer {display: flex; flex-flow: row nowrap; justify-content: flex-end; align-items: center;}
+
+        .area-header__logo {position: relative; display: block; width: auto; height: 36px; margin-right: 40px;}
+        .area-header__logo a {display: flex; justify-content: center; align-items: center; width: auto; height: inherit; white-space: nowrap;} 
+
+        .area-header__navList {display: block;}
+        .area-header__navList ul {display: flex; flex-flow: row nowrap; justify-content: flex-start; align-items: center;}
+        .area-header__navList ul li {display: block;}
+        .area-header__navList ul li a {display: inline-block; padding: 8px 10px; font-size: 16px; color: var(--brand-white); line-height: 1.2; white-space: nowrap; opacity: 0.7; transition: opacity 0.2s;}
+        .area-header__navList ul li a:hover,
+        .area-header__navList ul li a:active,
+        .area-header__navList ul li a:focus {opacity: 1;}
+
+        .area-header__btn {display: block; width: 36px; height: 36px; padding: 6px; margin-left: 8px; text-align: center; border-radius: 4px; transition: background 0.2s;}
+        .area-header__btn--menu {display: none;}
+        .area-header__btn:hover,
+        .area-header__btn:active,
+        .area-header__btn:focus {background: rgba(180, 190, 200, 0.2);}
+
+        .area-header__profile {position: relative; display: flex; justify-content: center; align-items: center; padding: 12px 0px 12px 16px;}
+        .area-header__profileImg {display: block; width: 36px; height: 36px; border-radius: 4px; overflow: hidden; background-color: var(--brand-grayscale-300); cursor: pointer;}
+        .area-header__profileImg img {display: block; width: 100%; height: 100%; object-fit: cover;}
+        .area-header__profileBtn {padding: 8px 10px;}
+        .area-header__profileBtn::after {content: ""; display: block; width: 0px; height: 0px; border-top: 6px solid var(--brand-white); border-left: transparent solid 5px; border-right: transparent solid 5px;}
+        .area-header__profile:hover .area-header__profileBtn::after,
+        .area-header__profile:active .area-header__profileBtn::after,
+        .area-header__profileBtn:focus::after {border-top: none; border-bottom: 6px solid var(--brand-white);}
+
+        .area-header__profileList {position: absolute; top: 60px; right: 0px; display: block; width: 180px; height: auto; padding-bottom: 4px; visibility: hidden; opacity: 0; background: rgba(0, 0, 0, 0.7); border: 2px solid rgba(100, 100, 100, 0.7); transition: opacity 0.2s;}
+        .area-header__profile:hover .area-header__profileList,
+        .area-header__profile:active .area-header__profileList,
+        .area-header__profileBtn:focus ~ .area-header__profileList {visibility: visible; opacity: 1;}
+        .area-header__profileList hr {margin: 4px 0px; border: 1px solid rgba(100, 100, 100, 0.7); outline: none;}
+        .area-header__profileItem {font-size: 14px; font-weight: 400;}
+        .area-header__profileItem span {font-size: inherit; color: inherit;}
+        .area-header__profileItem a {display: block; padding: 12px 8px; font-size: inherit; color: var(--brand-white); transition: background 0.2s;}
+        .area-header__profileItem a:hover,
+        .area-header__profileItem a:active,
+        .area-header__profileItem a:focus {text-decoration: underline; background-color: var(--brand-black);}
+        .area-header__profileItem--img a {display: flex; flex-flow: row nowrap; justify-content: flex-start; align-items: center; padding: 8px;}
+        .area-header__profileItem--img a img {display: block; width: 32px; height: 32px; margin-right: 6px; border-radius: 4px; overflow: hidden; background-color: var(--brand-grayscale-300); object-fit: cover;}
+
+        @media all and (max-width: 1280px) {
+            .area-header {padding: 0px 40px;}
+            .area-header__logo {margin-right: 28px;}
+        }
+        @media all and (max-width: 1024px) {
+            .area-header__navList {display: none;}
+            .area-header__btn--menu {display: block;}
+        }
+        @media all and (max-width: 768px) {
+            .area-header {height: 60px; padding: 0px 24px;}
+            .area-header__logo {margin-right: 0px;}
+        }
+        /* header */
+    </style>
+    <style>
+        /* main container */
+        .area-main {position: relative; display: block; width: 100%; min-height: inherit; padding: 0px 0px 100px; overflow: hidden;}
+        /* main container */
+
+        /* main banner */
+        .area-main__banner {position: relative; z-index: 3; display: block; width: 100%; height: auto; padding: 240px 60px 120px;}
+        .area-main__bannerImg {position: absolute; z-index: 0; top: 0px; left: 0px; right: 0px; width: 100%; height: 680px; overflow: hidden;}
+        .area-main__bannerImg::before {content: ""; position: absolute; z-index: 1; top: 0px; bottom: auto; left: 0px; right: 0px; width: 100%; height: 680px; background: linear-gradient(180deg, rgba(20,21,21,0) 74%, rgba(20,21,21,1) 92%);}
+        .area-main__bannerImg::after {content: ""; position: absolute; z-index: 2; top: 0px; bottom: auto; left: 0px; right: 0px; width: 100%; height: 680px; background: linear-gradient(90deg, rgba(20,21,21,0.92) 8%, rgba(20,21,21,0.12) 72%, rgba(20,21,21,0.12) 100%);}
+        .area-main__bannerImg img {display: block; width: 100%; height: 100%; object-fit: cover;}
+        .area-main__bannerContainer {position: relative; z-index: 3; display: block; width: 48%; height: auto;}
+        .area-main__bannerSeries {position: relative; display: flex; justify-content: flex-start; align-items: center; width: 100%; height: auto; margin-bottom: 8px;}
+        .area-main__bannerSeriesTxt {display: inline-block; margin-left: 4px; font-size: 20px; font-weight: 500; color: var(--brand-grayscale-400); line-height: 1.2;}
+        .area-main__bannerTitle {display: block; width: 100%; height: auto; margin-bottom: 14px; font-size: 80px; font-weight: 900; color: var(--brand-white); line-height: 1.2; white-space: nowrap; letter-spacing: -0.5px;}
+        .area-main__bannerArticle {display: block; width: 100%; height: auto; padding: 0px 4px; margin-bottom: 24px; font-size: 20px; font-weight: 400; color: var(--brand-white); line-height: 1.4; word-break: keep-all;}
+        .area-main__bannerBtnWrap {display: flex; flex-flow: row nowrap; justify-content: flex-start; align-items: center;}
+        .area-main__bannerBtn {display: flex; justify-content: center; align-items: center; padding: 4px 24px 4px 18px; color: var(--brand-white); border-radius: 4px; background-color: rgba(120, 120, 120, 0.6);}
+        .area-main__bannerBtn + .area-main__bannerBtn {margin-left: 12px;}
+        .area-main__bannerBtn--play {padding-left: 14px; color: var(--brand-black); background-color: var(--brand-white);}
+        .area-main__bannerBtn .material-icons {font-size: 36px; color: inherit;}
+        .area-main__bannerBtnTxt {display: inline-block; margin-left: 4px; font-size: 16px; font-weight: 600; color: inherit;}
+
+        @media all and (max-width: 1280px) {
+            .area-main__banner {padding: 200px 40px 140px;}
+            .area-main__bannerImg,
+            .area-main__bannerImg::before,
+            .area-main__bannerImg::after {height: 640px;}
+            .area-main__bannerContainer {width: 64%;}
+            .area-main__bannerTitle {font-size: 64px;}
+            .area-main__bannerArticle {font-size: 18px;}
+            .area-main__bannerSeriesTxt {font-size: 18px;}
+        }
+        @media all and (max-width: 1024px) {
+            .area-main__banner {padding: 200px 40px 120px;}
+            .area-main__bannerImg,
+            .area-main__bannerImg::before,
+            .area-main__bannerImg::after {height: 600px;}
+            .area-main__bannerContainer {width: 80%;}
+            .area-main__bannerTitle {font-size: 48px;}
+            .area-main__bannerArticle {font-size: 17px;}
+            .area-main__bannerBtnTxt {font-size: 15px;}
+        }
+        @media all and (max-width: 768px) {
+            .area-main__banner {padding: 140px 24px 160px;}
+            .area-main__bannerImg,
+            .area-main__bannerImg::before {height: 560px;}
+            .area-main__bannerImg::after {height: 560px; background: linear-gradient(90deg, rgba(20,21,21,0.92) 12%, rgba(20,21,21,0.12) 86%, rgba(20,21,21,0.12) 100%);}
+            .area-main__bannerContainer {width: 100%;}
+            .area-main__bannerTitle {font-size: 36px;}
+            .area-main__bannerArticle {font-size: 16px;}
+        }
+        /* main banner */
+        
+        /* main contents */
+        .area-main__contents {position: relative; z-index: 4; display: block;}
+        .area-main__contents + .area-main__contents {margin-top: 36px;}
+        .area-main__contentsTitle {display: block; width: 100%; height: auto; padding: 0px 60px; margin-bottom: 16px; font-size: 20px; font-weight: 600;}
+        .area-main__contentsList {display: flex; flex-flow: row nowrap; justify-content: flex-start; align-items: center; overflow-x: auto;}
+        .area-main__contentsList::-webkit-scrollbar {display: none;}
+        .area-main__contentsItem {position: relative; display: block; width: 20%; min-width: 240px; max-width: 320px; height: 56.25%; overflow: hidden;}
+        .area-main__contentsItem:first-of-type {margin-left: 60px;}
+        .area-main__contentsItem:last-of-type {margin-right: 60px;}
+        .area-main__contentsItem + .area-main__contentsItem {margin-left: 10px;}
+        .area-main__contentsItem a {display: flex; justify-content: center; align-items: center; width: 100%; height: 100%; border-radius: 4px; overflow: hidden; background-color: var(--brand-grayscale-300);}
+        .area-main__contentsItem a img {display: block; width: 100%; height: 100%; object-fit: cover; transform: scale(1); transition: all 0.2s;}
+        .area-main__contentsItem a:hover img,
+        .area-main__contentsItem a:active img,
+        .area-main__contentsItem a:focus img {transform: scale(1.1);}
+        .area-main__contentsItem p {position: absolute; bottom: 12px; left: 0px; width: auto; font-size: 0px;}
+        .area-main__contentsItem p span {display: inline-block; padding: 4px 8px; font-size: 14px; font-weight: 400; color: var(--brand-black); background-color: var(--brand-white); white-space: nowrap;}
+        .area-main__contentsItem p span:first-of-type {color: var(--brand-white); background-color: var(--brand-color);}
+
+        @media all and (max-width: 1280px) {
+            .area-main__contentsTitle {padding: 0px 40px;}
+            .area-main__contentsItem:first-of-type {margin-left: 40px;}
+            .area-main__contentsItem:last-of-type {margin-right: 40px;}
+        }
+        @media all and (max-width: 1024px) {
+            .area-main__contentsItem {min-width: 220px;}
+        }
+        @media all and (max-width: 768px) {
+            .area-main__contentsItem {min-width: 200px;}
+            .area-main__contentsTitle {padding: 0px 24px;}
+            .area-main__contentsItem:first-of-type {margin-left: 24px;}
+            .area-main__contentsItem:last-of-type {margin-right: 24px;}
+        }
+        /* main contents */
+    </style>
+</head>
+<body>
+    <!-- // header -->
+    <header class="area-header">
+        <div class="area-header__leftContainer">
+            <h1 class="area-header__logo" role="heading">
+                <a href="/" title="넷플릭스 홈 이동" role="link">
+                    <svg width="104" height="28" viewBox="0 0 111 30" fill="#D22F27" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" class="default-ltr-cache-1d568uk ev1dnif2"><g><path d="M105.06233,14.2806261 L110.999156,30 C109.249227,29.7497422 107.500234,29.4366857 105.718437,29.1554972 L102.374168,20.4686475 L98.9371075,28.4375293 C97.2499766,28.1563408 95.5928391,28.061674 93.9057081,27.8432843 L99.9372012,14.0931671 L94.4680851,-5.68434189e-14 L99.5313525,-5.68434189e-14 L102.593495,7.87421502 L105.874965,-5.68434189e-14 L110.999156,-5.68434189e-14 L105.06233,14.2806261 Z M90.4686475,-5.68434189e-14 L85.8749649,-5.68434189e-14 L85.8749649,27.2499766 C87.3746368,27.3437061 88.9371075,27.4055675 90.4686475,27.5930265 L90.4686475,-5.68434189e-14 Z M81.9055207,26.93692 C77.7186241,26.6557316 73.5307901,26.4064111 69.250164,26.3117443 L69.250164,-5.68434189e-14 L73.9366389,-5.68434189e-14 L73.9366389,21.8745899 C76.6248008,21.9373887 79.3120255,22.1557784 81.9055207,22.2804387 L81.9055207,26.93692 Z M64.2496954,10.6561065 L64.2496954,15.3435186 L57.8442216,15.3435186 L57.8442216,25.9996251 L53.2186709,25.9996251 L53.2186709,-5.68434189e-14 L66.3436123,-5.68434189e-14 L66.3436123,4.68741213 L57.8442216,4.68741213 L57.8442216,10.6561065 L64.2496954,10.6561065 Z M45.3435186,4.68741213 L45.3435186,26.2498828 C43.7810479,26.2498828 42.1876465,26.2498828 40.6561065,26.3117443 L40.6561065,4.68741213 L35.8121661,4.68741213 L35.8121661,-5.68434189e-14 L50.2183897,-5.68434189e-14 L50.2183897,4.68741213 L45.3435186,4.68741213 Z M30.749836,15.5928391 C28.687787,15.5928391 26.2498828,15.5928391 24.4999531,15.6875059 L24.4999531,22.6562939 C27.2499766,22.4678976 30,22.2495079 32.7809542,22.1557784 L32.7809542,26.6557316 L19.812541,27.6876933 L19.812541,-5.68434189e-14 L32.7809542,-5.68434189e-14 L32.7809542,4.68741213 L24.4999531,4.68741213 L24.4999531,10.9991564 C26.3126816,10.9991564 29.0936358,10.9054269 30.749836,10.9054269 L30.749836,15.5928391 Z M4.78114163,12.9684132 L4.78114163,29.3429562 C3.09401069,29.5313525 1.59340144,29.7497422 0,30 L0,-5.68434189e-14 L4.4690224,-5.68434189e-14 L10.562377,17.0315868 L10.562377,-5.68434189e-14 L15.2497891,-5.68434189e-14 L15.2497891,28.061674 C13.5935889,28.3437998 11.906458,28.4375293 10.1246602,28.6868498 L4.78114163,12.9684132 Z"></path></g></svg>
+                    <span class="blind">Netflix</span>
+                </a>
+            </h1>
+            <nav class="area-header__navList" role="navigation">
+                <ul role="menu">
+                    <li role="menuitem"><a href="javascript:void(0)" title="홈 바로가기" role="link">홈</a></li>
+                    <li role="menuitem"><a href="javascript:void(0)" title="시리즈 바로가기" role="link">시리즈</a></li>
+                    <li role="menuitem"><a href="javascript:void(0)" title="영화 바로가기" role="link">영화</a></li>
+                    <li role="menuitem"><a href="javascript:void(0)" title="NEW!요즘 대세 콘텐츠 바로가기" role="link">NEW!요즘 대세 콘텐츠</a></li>
+                    <li role="menuitem"><a href="javascript:void(0)" title="내가 찜한 콘텐츠 바로가기" role="link">내가 찜한 콘텐츠</a></li>
+                    <li role="menuitem"><a href="javascript:void(0)" title="언어별로 찾아보기" role="link">언어별로 찾아보기</a></li>
+                </ul>
+            </nav>
+        </div>
+        <div class="area-header__rightContainer">
+            <button type="button" class="area-header__btn" title="검색" role="button">
+                <span class="material-icons">search</span>
+            </button>
+            <button type="button" class="area-header__btn" title="알림" role="button">
+                <span class="material-icons">notifications</span>
+            </button>
+            <div class="area-header__profile">
+                <div class="area-header__profileImg">
+                    <img src="https://source.unsplash.com/random/120x120/?person" role="img" alt="랜덤 프로필 이미지 : 나">
+                </div>
+                <button type="button" class="area-header__profileBtn" title="프로필 드롭다운 열기/닫기"><span class="blind">&#9662;</span></button>
+                <ul class="area-header__profileList" role="list">
+                    <li class="area-header__profileItem area-header__profileItem--img" role="listitem">
+                        <a href="javascript:void(0)" title="프로필 변경" role="button">
+                            <img src="https://source.unsplash.com/random/120x120/?father" role="img" alt="랜덤 프로필 이미지 : 아빠">
+                            <span>프로필 1 - 아빠</span>
+                        </a>
+                    </li>
+                    <li class="area-header__profileItem area-header__profileItem--img" role="listitem">
+                        <a href="javascript:void(0)" title="프로필 변경" role="button">
+                            <img src="https://source.unsplash.com/random/120x120/?mother" role="img" alt="랜덤 프로필 이미지 : 엄마">
+                            <span>프로필 2 - 엄마</span>
+                        </a>
+                    </li>
+                    <li class="area-header__profileItem area-header__profileItem--img" role="listitem">
+                        <a href="javascript:void(0)" title="프로필 변경" role="button">
+                            <img src="https://source.unsplash.com/random/120x120/?sister" role="img" alt="랜덤 프로필 이미지 : 누나">
+                            <span>프로필 3 - 누나</span>
+                        </a>
+                    </li>
+                    <li class="area-header__profileItem area-header__profileItem--img" role="listitem">
+                        <a href="javascript:void(0)" title="프로필 변경" role="button">
+                            <img src="https://source.unsplash.com/random/120x120/?brother" role="img" alt="랜덤 프로필 이미지 : 동생">
+                            <span>프로필 4 - 동생</span>
+                        </a>
+                    </li>
+                    <li class="area-header__profileItem" role="listitem"><a href="javascript:void(0)" title="프로필 관리 바로가기" role="link">프로필 관리</a></li>
+                    <hr>
+                    <li class="area-header__profileItem" role="listitem"><a href="javascript:void(0)" title="키즈 바로가기" role="link">키즈</a></li>
+                    <hr>
+                    <li class="area-header__profileItem" role="listitem"><a href="javascript:void(0)" title="계정 바로가기" role="link">계정</a></li>
+                    <li class="area-header__profileItem" role="listitem"><a href="javascript:void(0)" title="교육센터 바로가기" role="link">교육센터</a></li>
+                    <li class="area-header__profileItem" role="listitem"><a href="javascript:void(0)" title="Netflix에서 로그아웃" role="button">Netflix에서 로그아웃</a></li>
+                </ul>
+            </div>
+            <button type="button" class="area-header__btn area-header__btn--menu" title="메뉴" role="button">
+                <span class="material-icons">menu</span>
+            </button>
+        </div>
+    </header>
+    <!-- // header -->
+
+    <!-- // main container -->
+    <main class="area-main" role="main">
+        <!-- // banner -->
+        <section class="area-main__banner" role="banner">
+            <div class="area-main__bannerContainer">
+                <p class="area-main__bannerSeries" title="넷플릭스 오리지널 시리즈">
+                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" style="enable-background:new 0 0 512 512;" version="1.1" viewBox="0 0 512 512" width="32" height="32" xml:space="preserve"><g id="_x36_4-netflix"><g><g><g><rect height="478.5" style="fill:#E53333;" width="89.477" x="300.736" y="16.75"/><rect height="478.5" style="fill:#E53333;" width="89.47" x="121.788" y="16.75"/><path d="M390.213,495.25h-89.477L121.788,16.75h89.47L390.213,495.25z M390.213,495.25" style="fill:#F84437;"/></g></g></g></g><g id="Layer_1"/></svg>
+                    <span class="blind">Netflix Original</span>
+                    <span class="area-main__bannerSeriesTxt">시리즈</span>
+                </p>
+                <h2 class="area-main__bannerTitle" role="heading">Lorem Ipsum</h2>
+                <p class="area-main__bannerArticle" role="article">It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.</p>
+                <div class="area-main__bannerBtnWrap">
+                    <button type="button" class="area-main__bannerBtn area-main__bannerBtn--play" title="재생" role="button">
+                        <span class="material-icons">play_arrow</span>
+                        <span class="area-main__bannerBtnTxt">재생</span>
+                    </button>
+                    <button type="button" class="area-main__bannerBtn" title="상세 정보" role="button">
+                        <span class="material-icons">info</span>
+                        <span class="area-main__bannerBtnTxt">상세 정보</span>
+                    </button>
+                </div>
+            </div>
+            <div class="area-main__bannerImg">
+                <img src="https://source.unsplash.com/random/1920x1080/?netflix" alt="배너 이미지" role="img">
+            </div>
+        </section>
+        <!-- // banner -->
+
+        <!-- // contents column -->
+        <article class="area-main__contents" role="group">
+            <h3 class="area-main__contentsTitle" role="heading">넷플릭스 인기 콘텐츠</h3>
+            <ul class="area-main__contentsList" role="list">
+                <!-- // list item -->
+                <li class="area-main__contentsItem" role="listitem">
+                    <h4 class="blind" role="heading">contents - 01</h4>
+                    <a href="javascirpt:void(0)" title="인기 콘텐츠 예시 01 바로가기" role="link">
+                        <img src="https://source.unsplash.com/random/1920x1080/?hero" alt="인기 콘텐츠 이미지 예시 01">
+                    </a>
+                    <p>
+                        <span>새로운 에피소드</span>
+                        <span>지금 시청하기</span>
+                    </p>
+                </li>
+                <!-- // list item -->
+                <!-- // list item -->
+                <li class="area-main__contentsItem" role="listitem">
+                    <h4 class="blind" role="heading">contents - 02</h4>
+                    <a href="javascirpt:void(0)" title="인기 콘텐츠 예시 02 바로가기" role="link">
+                        <img src="https://source.unsplash.com/random/1920x1080/?marvel" alt="인기 콘텐츠 이미지 예시 02">
+                    </a>
+                    <p>
+                        <span>새로운 에피소드</span>
+                        <span>지금 시청하기</span>
+                    </p>
+                </li>
+                <!-- // list item -->
+                <!-- // list item -->
+                <li class="area-main__contentsItem" role="listitem">
+                    <h4 class="blind" role="heading">contents - 03</h4>
+                    <a href="javascirpt:void(0)" title="인기 콘텐츠 예시 03 바로가기" role="link">
+                        <img src="https://source.unsplash.com/random/1920x1080/?romantic" alt="인기 콘텐츠 이미지 예시 03">
+                    </a>
+                    <p>
+                        <span>새로운 에피소드</span>
+                        <span>지금 시청하기</span>
+                    </p>
+                </li>
+                <!-- // list item -->
+                <!-- // list item -->
+                <li class="area-main__contentsItem" role="listitem">
+                    <h4 class="blind" role="heading">contents - 04</h4>
+                    <a href="javascirpt:void(0)" title="인기 콘텐츠 예시 04 바로가기" role="link">
+                        <img src="https://source.unsplash.com/random/1920x1080/?sports" alt="인기 콘텐츠 이미지 예시 04">
+                    </a>
+                    <p>
+                        <span>새로운 에피소드</span>
+                        <span>지금 시청하기</span>
+                    </p>
+                </li>
+                <!-- // list item -->
+                <!-- // list item -->
+                <li class="area-main__contentsItem" role="listitem">
+                    <h4 class="blind" role="heading">contents - 05</h4>
+                    <a href="javascirpt:void(0)" title="인기 콘텐츠 예시 05 바로가기" role="link">
+                        <img src="https://source.unsplash.com/random/1920x1080/?spy" alt="인기 콘텐츠 이미지 예시 05">
+                    </a>
+                    <p>
+                        <span>새로운 에피소드</span>
+                        <span>지금 시청하기</span>
+                    </p>
+                </li>
+                <!-- // list item -->
+                <!-- // list item -->
+                <li class="area-main__contentsItem" role="listitem">
+                    <h4 class="blind" role="heading">contents - 06</h4>
+                    <a href="javascirpt:void(0)" title="인기 콘텐츠 예시 06 바로가기" role="link">
+                        <img src="https://source.unsplash.com/random/1920x1080/?movie" alt="인기 콘텐츠 이미지 예시 06">
+                    </a>
+                    <p>
+                        <span>새로운 에피소드</span>
+                        <span>지금 시청하기</span>
+                    </p>
+                </li>
+                <!-- // list item -->
+                <!-- // list item -->
+                <li class="area-main__contentsItem" role="listitem">
+                    <h4 class="blind" role="heading">contents - 07</h4>
+                    <a href="javascirpt:void(0)" title="인기 콘텐츠 예시 07 바로가기" role="link">
+                        <img src="https://source.unsplash.com/random/1920x1080/?teenage" alt="인기 콘텐츠 이미지 예시 07">
+                    </a>
+                    <p>
+                        <span>새로운 에피소드</span>
+                        <span>지금 시청하기</span>
+                    </p>
+                </li>
+                <!-- // list item -->
+                <!-- // list item -->
+                <li class="area-main__contentsItem" role="listitem">
+                    <h4 class="blind" role="heading">contents - 08</h4>
+                    <a href="javascirpt:void(0)" title="인기 콘텐츠 예시 08 바로가기" role="link">
+                        <img src="https://source.unsplash.com/random/1920x1080/?nature" alt="인기 콘텐츠 이미지 예시 08">
+                    </a>
+                    <p>
+                        <span>새로운 에피소드</span>
+                        <span>지금 시청하기</span>
+                    </p>
+                </li>
+                <!-- // list item -->
+                <!-- // list item -->
+                <li class="area-main__contentsItem" role="listitem">
+                    <h4 class="blind" role="heading">contents - 09</h4>
+                    <a href="javascirpt:void(0)" title="인기 콘텐츠 예시 09 바로가기" role="link">
+                        <img src="https://source.unsplash.com/random/1920x1080/?savannah" alt="인기 콘텐츠 이미지 예시 09">
+                    </a>
+                    <p>
+                        <span>새로운 에피소드</span>
+                        <span>지금 시청하기</span>
+                    </p>
+                </li>
+                <!-- // list item -->
+                <!-- // list item -->
+                <li class="area-main__contentsItem" role="listitem">
+                    <h4 class="blind" role="heading">contents - 10</h4>
+                    <a href="javascirpt:void(0)" title="인기 콘텐츠 예시 10 바로가기" role="link">
+                        <img src="https://source.unsplash.com/random/1920x1080/?city" alt="인기 콘텐츠 이미지 예시 10">
+                    </a>
+                    <p>
+                        <span>새로운 에피소드</span>
+                        <span>지금 시청하기</span>
+                    </p>
+                </li>
+                <!-- // list item -->
+            </ul>
+        </article>
+        <!-- // contents column -->
+
+        <!-- // contents column -->
+        <article class="area-main__contents" role="group">
+            <h3 class="area-main__contentsTitle" role="heading">맞춤형 콘텐츠</h3>
+            <ul class="area-main__contentsList" role="list">
+                <!-- // list item -->
+                <li class="area-main__contentsItem" role="listitem">
+                    <h4 class="blind" role="heading">contents - 01</h4>
+                    <a href="javascirpt:void(0)" title="맞춤형 콘텐츠 예시 01 바로가기" role="link">
+                        <img src="https://source.unsplash.com/random/1920x1080/?horror" alt="맞춤형 콘텐츠 이미지 예시 01">
+                    </a>
+                    <p>
+                        <span>새로운 에피소드</span>
+                        <span>지금 시청하기</span>
+                    </p>
+                </li>
+                <!-- // list item -->
+                <!-- // list item -->
+                <li class="area-main__contentsItem" role="listitem">
+                    <h4 class="blind" role="heading">contents - 02</h4>
+                    <a href="javascirpt:void(0)" title="맞춤형 콘텐츠 예시 02 바로가기" role="link">
+                        <img src="https://source.unsplash.com/random/1920x1080/?gang" alt="맞춤형 콘텐츠 이미지 예시 02">
+                    </a>
+                    <p>
+                        <span>새로운 에피소드</span>
+                        <span>지금 시청하기</span>
+                    </p>
+                </li>
+                <!-- // list item -->
+                <!-- // list item -->
+                <li class="area-main__contentsItem" role="listitem">
+                    <h4 class="blind" role="heading">contents - 03</h4>
+                    <a href="javascirpt:void(0)" title="맞춤형 콘텐츠 예시 03 바로가기" role="link">
+                        <img src="https://source.unsplash.com/random/1920x1080/?animation" alt="맞춤형 콘텐츠 이미지 예시 03">
+                    </a>
+                    <p>
+                        <span>새로운 에피소드</span>
+                        <span>지금 시청하기</span>
+                    </p>
+                </li>
+                <!-- // list item -->
+                <!-- // list item -->
+                <li class="area-main__contentsItem" role="listitem">
+                    <h4 class="blind" role="heading">contents - 04</h4>
+                    <a href="javascirpt:void(0)" title="맞춤형 콘텐츠 예시 04 바로가기" role="link">
+                        <img src="https://source.unsplash.com/random/1920x1080/?court" alt="맞춤형 콘텐츠 이미지 예시 04">
+                    </a>
+                    <p>
+                        <span>새로운 에피소드</span>
+                        <span>지금 시청하기</span>
+                    </p>
+                </li>
+                <!-- // list item -->
+                <!-- // list item -->
+                <li class="area-main__contentsItem" role="listitem">
+                    <h4 class="blind" role="heading">contents - 05</h4>
+                    <a href="javascirpt:void(0)" title="맞춤형 콘텐츠 예시 05 바로가기" role="link">
+                        <img src="https://source.unsplash.com/random/1920x1080/?basketball" alt="맞춤형 콘텐츠 이미지 예시 05">
+                    </a>
+                    <p>
+                        <span>새로운 에피소드</span>
+                        <span>지금 시청하기</span>
+                    </p>
+                </li>
+                <!-- // list item -->
+                <!-- // list item -->
+                <li class="area-main__contentsItem" role="listitem">
+                    <h4 class="blind" role="heading">contents - 06</h4>
+                    <a href="javascirpt:void(0)" title="맞춤형 콘텐츠 예시 06 바로가기" role="link">
+                        <img src="https://source.unsplash.com/random/1920x1080/?baseball" alt="맞춤형 콘텐츠 이미지 예시 06">
+                    </a>
+                    <p>
+                        <span>새로운 에피소드</span>
+                        <span>지금 시청하기</span>
+                    </p>
+                </li>
+                <!-- // list item -->
+                <!-- // list item -->
+                <li class="area-main__contentsItem" role="listitem">
+                    <h4 class="blind" role="heading">contents - 07</h4>
+                    <a href="javascirpt:void(0)" title="맞춤형 콘텐츠 예시 07 바로가기" role="link">
+                        <img src="https://source.unsplash.com/random/1920x1080/?action" alt="맞춤형 콘텐츠 이미지 예시 07">
+                    </a>
+                    <p>
+                        <span>새로운 에피소드</span>
+                        <span>지금 시청하기</span>
+                    </p>
+                </li>
+                <!-- // list item -->
+                <!-- // list item -->
+                <li class="area-main__contentsItem" role="listitem">
+                    <h4 class="blind" role="heading">contents - 08</h4>
+                    <a href="javascirpt:void(0)" title="맞춤형 콘텐츠 예시 08 바로가기" role="link">
+                        <img src="https://source.unsplash.com/random/1920x1080/?adult" alt="맞춤형 콘텐츠 이미지 예시 08">
+                    </a>
+                    <p>
+                        <span>새로운 에피소드</span>
+                        <span>지금 시청하기</span>
+                    </p>
+                </li>
+                <!-- // list item -->
+                <!-- // list item -->
+                <li class="area-main__contentsItem" role="listitem">
+                    <h4 class="blind" role="heading">contents - 09</h4>
+                    <a href="javascirpt:void(0)" title="맞춤형 콘텐츠 예시 09 바로가기" role="link">
+                        <img src="https://source.unsplash.com/random/1920x1080/?video" alt="맞춤형 콘텐츠 이미지 예시 09">
+                    </a>
+                    <p>
+                        <span>새로운 에피소드</span>
+                        <span>지금 시청하기</span>
+                    </p>
+                </li>
+                <!-- // list item -->
+            </ul>
+        </article>
+        <!-- // contents column -->
+    </main>
+    <!-- // main container -->
+</body>
+</html>
