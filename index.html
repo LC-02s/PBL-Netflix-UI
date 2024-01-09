@@ -20,7 +20,12 @@
             --brand-black: #141515;
             --brand-grayscale-300: #D7D7D7;
             --brand-grayscale-400: #B7B6B5;
+            --brand-grayscale-600: #828282;
+            --brand-grayscale-800: #414141;
+            --brand-grayscale-900: #242424;
             --brand-color: #A82319;
+            --brand-orange: #DB661F;
+            --brand-green: #00AC4C;
         }
     </style>
     <style>
@@ -151,20 +156,46 @@
         .area-main__contents {position: relative; z-index: 4; display: block;}
         .area-main__contents + .area-main__contents {margin-top: 36px;}
         .area-main__contentsTitle {display: block; width: 100%; height: auto; padding: 0px 60px; margin-bottom: 16px; font-size: 20px; font-weight: 600;}
-        .area-main__contentsList {display: flex; flex-flow: row nowrap; justify-content: flex-start; align-items: center; overflow-x: auto;}
+        .area-main__contentsList {display: flex; flex-flow: row nowrap; justify-content: flex-start; align-items: center;}
         .area-main__contentsList::-webkit-scrollbar {display: none;}
-        .area-main__contentsItem {position: relative; display: block; width: 20%; min-width: 240px; max-width: 320px; height: 56.25%; overflow: hidden;}
+        .area-main__contentsItem {position: relative; display: block; width: 20%; min-width: 240px; max-width: 320px; height: 56.25%;}
         .area-main__contentsItem:first-of-type {margin-left: 60px;}
         .area-main__contentsItem:last-of-type {margin-right: 60px;}
         .area-main__contentsItem + .area-main__contentsItem {margin-left: 10px;}
-        .area-main__contentsItem a {display: flex; justify-content: center; align-items: center; width: 100%; height: 100%; border-radius: 4px; overflow: hidden; background-color: var(--brand-grayscale-300);}
-        .area-main__contentsItem a img {display: block; width: 100%; height: 100%; object-fit: cover; transform: scale(1); transition: all 0.2s;}
-        .area-main__contentsItem a:hover img,
-        .area-main__contentsItem a:active img,
-        .area-main__contentsItem a:focus img {transform: scale(1.1);}
-        .area-main__contentsItem p {position: absolute; bottom: 12px; left: 0px; width: auto; font-size: 0px;}
-        .area-main__contentsItem p span {display: inline-block; padding: 4px 8px; font-size: 14px; font-weight: 400; color: var(--brand-black); background-color: var(--brand-white); white-space: nowrap;}
-        .area-main__contentsItem p span:first-of-type {color: var(--brand-white); background-color: var(--brand-color);}
+
+        .area-main__contentsItemBox {position: relative; display: block; width: 100%; height: 100%; border-radius: 4px; overflow: hidden; transform: scale(1); transition: transform 0.2s;}
+        .area-main__contentsItem:hover .area-main__contentsItemBox {z-index: 10; transform: scale(1.2); box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.2);}
+        .area-main__contentsItemViewBox {display: flex; justify-content: center; align-items: center; width: 100%; height: 100%; background-color: var(--brand-grayscale-300);}
+        .area-main__contentsItemViewBox img {display: block; width: 100%; height: 100%; object-fit: cover;}
+
+        .area-main__contentsItemStatus {position: absolute; bottom: 12px; left: 0px; width: auto; font-size: 0px; visibility: visible; opacity: 1; transition: all 0.1s;}
+        .area-main__contentsItemBox:hover .area-main__contentsItemStatus {visibility: hidden; opacity: 0;}
+        .area-main__contentsItemStatus > span {display: inline-block; padding: 4px 8px; font-size: 14px; font-weight: 400; color: var(--brand-black); background-color: var(--brand-white); white-space: nowrap;}
+        .area-main__contentsItemStatus > span:first-of-type {color: var(--brand-white); background-color: var(--brand-color);}
+
+        .area-main__contentsTool {display: none; width: 100%; height: auto; padding: 14px 10px; background-color: var(--brand-grayscale-900);}
+        .area-main__contentsItem:hover .area-main__contentsTool {display: block;}
+
+        .area-main__contentsToolBtnWrap {display: flex; flex-flow: row nowrap; justify-content: space-between; align-items: center; margin-bottom: 12px;}
+        .area-main__contentsToolBtnRight {display: flex; flex-flow: row nowrap; justify-content: flex-start; align-items: center;}
+        .area-main__contentsToolBtn {display: flex; justify-content: center; align-items: center; width: 30px; height: 30px; padding: 4px; border-radius: 50%; border: 1px solid var(--brand-grayscale-400); background-color: var(--brand-grayscale-800);}
+        .area-main__contentsToolBtn + .area-main__contentsToolBtn {margin-left: 4px;}
+        .area-main__contentsToolBtn .material-icons {font-size: 20px; color: var(--brand-white);}
+        .area-main__contentsToolBtn--hand .material-icons {font-size: 16px;}
+        .area-main__contentsToolBtn--play {border-color: var(--brand-white); background-color: var(--brand-white);}
+        .area-main__contentsToolBtn--play .material-icons {color: var(--brand-black);}
+
+        .area-main__contentsToolSummary {display: flex; flex-flow: row nowrap; justify-content: flex-start; align-items: center; width: 100%; height: auto; margin-bottom: 8px;}
+        .area-main__contentsToolSummary span {display: inline-block; font-size: 12px; line-height: 1; white-space: nowrap;}
+        .area-main__contentsToolSummary span + span {margin-left: 6px;}
+        .area-main__contentsToolSummary--matching {font-weight: 500; color: var(--brand-green);}
+        .area-main__contentsToolSummary--age {padding: 4px; border-radius: 2px; font-size: 14px; font-weight: 900; color: var(--brand-white); background-color: var(--brand-orange);}
+        .area-main__contentsToolSummary--resolution {padding: 2px 4px 1px; border: 1px solid var(--brand-grayscale-400); border-radius: 2px; font-size: 8px!important; font-weight: 400; color: var(--brand-white);}
+
+        .area-main__contentsToolDescription {display: block; width: 100%; height: auto; font-size: 0px;}
+        .area-main__contentsToolDescription > span {position: relative; display: inline-block; font-size: 12px; font-weight: 400; color: var(--brand-grayscale-300); white-space: nowrap;}
+        .area-main__contentsToolDescription > span + span {padding-left: 7px;}
+        .area-main__contentsToolDescription > span + span::before {content: ""; position: absolute; top: 0px; bottom: 0px; left: 3px; display: block; width: 2px; height: 2px; margin: auto 0px; border-radius: 50%; background-color: var(--brand-grayscale-400);}
 
         @media all and (max-width: 1280px) {
             .area-main__contentsTitle {padding: 0px 40px;}
@@ -292,122 +323,362 @@
             <ul class="area-main__contentsList" role="list">
                 <!-- // list item -->
                 <li class="area-main__contentsItem" role="listitem">
-                    <h4 class="blind" role="heading">contents - 01</h4>
-                    <a href="javascirpt:void(0)" title="인기 콘텐츠 예시 01 바로가기" role="link">
-                        <img src="https://source.unsplash.com/random/1920x1080/?hero" alt="인기 콘텐츠 이미지 예시 01">
-                    </a>
-                    <p>
-                        <span>새로운 에피소드</span>
-                        <span>지금 시청하기</span>
-                    </p>
+                    <div class="area-main__contentsItemBox">
+                        <h4 class="blind" role="heading">contents - 01</h4>
+                        <div class="area-main__contentsItemViewBox">
+                            <img src="https://source.unsplash.com/random/1920x1080/?hero" alt="인기 콘텐츠 이미지 예시 01">
+                        </div>
+                        <p class="area-main__contentsItemStatus">
+                            <span>새로운 에피소드</span>
+                            <span>지금 시청하기</span>
+                        </p>
+                        <div class="area-main__contentsTool">
+                            <div class="area-main__contentsToolBtnWrap">
+                                <div class="area-main__contentsToolBtnRight">
+                                    <button type="button" class="area-main__contentsToolBtn area-main__contentsToolBtn--play"><span class="material-icons">play_arrow</span></button>
+                                    <button type="button" class="area-main__contentsToolBtn"><span class="material-icons">done</span></button>
+                                    <button type="button" class="area-main__contentsToolBtn area-main__contentsToolBtn--hand"><span class="material-icons">thumb_up</span></button>
+                                    <button type="button" class="area-main__contentsToolBtn area-main__contentsToolBtn--hand"><span class="material-icons">thumb_down</span></button>
+                                </div>
+                                <button type="button" class="area-main__contentsToolBtn"><span class="material-icons">keyboard_arrow_down</span></button>
+                            </div>
+                            <p class="area-main__contentsToolSummary">
+                                <span class="area-main__contentsToolSummary--matching">98% 일치</span>
+                                <span class="area-main__contentsToolSummary--age">15</span>
+                                <span class="area-main__contentsToolSummary--season">시즌 2개</span>
+                                <span class="area-main__contentsToolSummary--resolution">HD</span>
+                            </p>
+                            <p class="area-main__contentsToolDescription">
+                                <span>진심 어린</span>
+                                <span>감정을 파고드든</span>
+                                <span>로맨틱</span>
+                            </p>
+                        </div>
+                    </div>
                 </li>
                 <!-- // list item -->
                 <!-- // list item -->
                 <li class="area-main__contentsItem" role="listitem">
-                    <h4 class="blind" role="heading">contents - 02</h4>
-                    <a href="javascirpt:void(0)" title="인기 콘텐츠 예시 02 바로가기" role="link">
-                        <img src="https://source.unsplash.com/random/1920x1080/?marvel" alt="인기 콘텐츠 이미지 예시 02">
-                    </a>
-                    <p>
-                        <span>새로운 에피소드</span>
-                        <span>지금 시청하기</span>
-                    </p>
+                    <div class="area-main__contentsItemBox">
+                        <h4 class="blind" role="heading">contents - 02</h4>
+                        <div class="area-main__contentsItemViewBox">
+                            <img src="https://source.unsplash.com/random/1920x1080/?marvel" alt="인기 콘텐츠 이미지 예시 02">
+                        </div>
+                        <p class="area-main__contentsItemStatus">
+                            <span>새로운 에피소드</span>
+                            <span>지금 시청하기</span>
+                        </p>
+                        <div class="area-main__contentsTool">
+                            <div class="area-main__contentsToolBtnWrap">
+                                <div class="area-main__contentsToolBtnRight">
+                                    <button type="button" class="area-main__contentsToolBtn area-main__contentsToolBtn--play"><span class="material-icons">play_arrow</span></button>
+                                    <button type="button" class="area-main__contentsToolBtn"><span class="material-icons">done</span></button>
+                                    <button type="button" class="area-main__contentsToolBtn area-main__contentsToolBtn--hand"><span class="material-icons">thumb_up</span></button>
+                                    <button type="button" class="area-main__contentsToolBtn area-main__contentsToolBtn--hand"><span class="material-icons">thumb_down</span></button>
+                                </div>
+                                <button type="button" class="area-main__contentsToolBtn"><span class="material-icons">keyboard_arrow_down</span></button>
+                            </div>
+                            <p class="area-main__contentsToolSummary">
+                                <span class="area-main__contentsToolSummary--matching">98% 일치</span>
+                                <span class="area-main__contentsToolSummary--age">15</span>
+                                <span class="area-main__contentsToolSummary--season">시즌 2개</span>
+                                <span class="area-main__contentsToolSummary--resolution">HD</span>
+                            </p>
+                            <p class="area-main__contentsToolDescription">
+                                <span>진심 어린</span>
+                                <span>감정을 파고드든</span>
+                                <span>로맨틱</span>
+                            </p>
+                        </div>
+                    </div>
                 </li>
                 <!-- // list item -->
                 <!-- // list item -->
                 <li class="area-main__contentsItem" role="listitem">
-                    <h4 class="blind" role="heading">contents - 03</h4>
-                    <a href="javascirpt:void(0)" title="인기 콘텐츠 예시 03 바로가기" role="link">
-                        <img src="https://source.unsplash.com/random/1920x1080/?romantic" alt="인기 콘텐츠 이미지 예시 03">
-                    </a>
-                    <p>
-                        <span>새로운 에피소드</span>
-                        <span>지금 시청하기</span>
-                    </p>
+                    <div class="area-main__contentsItemBox">
+                        <h4 class="blind" role="heading">contents - 03</h4>
+                        <div class="area-main__contentsItemViewBox">
+                            <img src="https://source.unsplash.com/random/1920x1080/?romantic" alt="인기 콘텐츠 이미지 예시 03">
+                        </div>
+                        <p class="area-main__contentsItemStatus">
+                            <span>새로운 에피소드</span>
+                            <span>지금 시청하기</span>
+                        </p>
+                        <div class="area-main__contentsTool">
+                            <div class="area-main__contentsToolBtnWrap">
+                                <div class="area-main__contentsToolBtnRight">
+                                    <button type="button" class="area-main__contentsToolBtn area-main__contentsToolBtn--play"><span class="material-icons">play_arrow</span></button>
+                                    <button type="button" class="area-main__contentsToolBtn"><span class="material-icons">done</span></button>
+                                    <button type="button" class="area-main__contentsToolBtn area-main__contentsToolBtn--hand"><span class="material-icons">thumb_up</span></button>
+                                    <button type="button" class="area-main__contentsToolBtn area-main__contentsToolBtn--hand"><span class="material-icons">thumb_down</span></button>
+                                </div>
+                                <button type="button" class="area-main__contentsToolBtn"><span class="material-icons">keyboard_arrow_down</span></button>
+                            </div>
+                            <p class="area-main__contentsToolSummary">
+                                <span class="area-main__contentsToolSummary--matching">98% 일치</span>
+                                <span class="area-main__contentsToolSummary--age">15</span>
+                                <span class="area-main__contentsToolSummary--season">시즌 2개</span>
+                                <span class="area-main__contentsToolSummary--resolution">HD</span>
+                            </p>
+                            <p class="area-main__contentsToolDescription">
+                                <span>진심 어린</span>
+                                <span>감정을 파고드든</span>
+                                <span>로맨틱</span>
+                            </p>
+                        </div>
+                    </div>
                 </li>
                 <!-- // list item -->
                 <!-- // list item -->
                 <li class="area-main__contentsItem" role="listitem">
-                    <h4 class="blind" role="heading">contents - 04</h4>
-                    <a href="javascirpt:void(0)" title="인기 콘텐츠 예시 04 바로가기" role="link">
-                        <img src="https://source.unsplash.com/random/1920x1080/?sports" alt="인기 콘텐츠 이미지 예시 04">
-                    </a>
-                    <p>
-                        <span>새로운 에피소드</span>
-                        <span>지금 시청하기</span>
-                    </p>
+                    <div class="area-main__contentsItemBox">
+                        <h4 class="blind" role="heading">contents - 04</h4>
+                        <div class="area-main__contentsItemViewBox">
+                            <img src="https://source.unsplash.com/random/1920x1080/?sports" alt="인기 콘텐츠 이미지 예시 04">
+                        </div>
+                        <p class="area-main__contentsItemStatus">
+                            <span>새로운 에피소드</span>
+                            <span>지금 시청하기</span>
+                        </p>
+                        <div class="area-main__contentsTool">
+                            <div class="area-main__contentsToolBtnWrap">
+                                <div class="area-main__contentsToolBtnRight">
+                                    <button type="button" class="area-main__contentsToolBtn area-main__contentsToolBtn--play"><span class="material-icons">play_arrow</span></button>
+                                    <button type="button" class="area-main__contentsToolBtn"><span class="material-icons">done</span></button>
+                                    <button type="button" class="area-main__contentsToolBtn area-main__contentsToolBtn--hand"><span class="material-icons">thumb_up</span></button>
+                                    <button type="button" class="area-main__contentsToolBtn area-main__contentsToolBtn--hand"><span class="material-icons">thumb_down</span></button>
+                                </div>
+                                <button type="button" class="area-main__contentsToolBtn"><span class="material-icons">keyboard_arrow_down</span></button>
+                            </div>
+                            <p class="area-main__contentsToolSummary">
+                                <span class="area-main__contentsToolSummary--matching">98% 일치</span>
+                                <span class="area-main__contentsToolSummary--age">15</span>
+                                <span class="area-main__contentsToolSummary--season">시즌 2개</span>
+                                <span class="area-main__contentsToolSummary--resolution">HD</span>
+                            </p>
+                            <p class="area-main__contentsToolDescription">
+                                <span>진심 어린</span>
+                                <span>감정을 파고드든</span>
+                                <span>로맨틱</span>
+                            </p>
+                        </div>
+                    </div>
                 </li>
                 <!-- // list item -->
                 <!-- // list item -->
                 <li class="area-main__contentsItem" role="listitem">
-                    <h4 class="blind" role="heading">contents - 05</h4>
-                    <a href="javascirpt:void(0)" title="인기 콘텐츠 예시 05 바로가기" role="link">
-                        <img src="https://source.unsplash.com/random/1920x1080/?spy" alt="인기 콘텐츠 이미지 예시 05">
-                    </a>
-                    <p>
-                        <span>새로운 에피소드</span>
-                        <span>지금 시청하기</span>
-                    </p>
+                    <div class="area-main__contentsItemBox">
+                        <h4 class="blind" role="heading">contents - 05</h4>
+                        <div class="area-main__contentsItemViewBox">
+                            <img src="https://source.unsplash.com/random/1920x1080/?spy" alt="인기 콘텐츠 이미지 예시 05">
+                        </div>
+                        <p class="area-main__contentsItemStatus">
+                            <span>새로운 에피소드</span>
+                            <span>지금 시청하기</span>
+                        </p>
+                        <div class="area-main__contentsTool">
+                            <div class="area-main__contentsToolBtnWrap">
+                                <div class="area-main__contentsToolBtnRight">
+                                    <button type="button" class="area-main__contentsToolBtn area-main__contentsToolBtn--play"><span class="material-icons">play_arrow</span></button>
+                                    <button type="button" class="area-main__contentsToolBtn"><span class="material-icons">done</span></button>
+                                    <button type="button" class="area-main__contentsToolBtn area-main__contentsToolBtn--hand"><span class="material-icons">thumb_up</span></button>
+                                    <button type="button" class="area-main__contentsToolBtn area-main__contentsToolBtn--hand"><span class="material-icons">thumb_down</span></button>
+                                </div>
+                                <button type="button" class="area-main__contentsToolBtn"><span class="material-icons">keyboard_arrow_down</span></button>
+                            </div>
+                            <p class="area-main__contentsToolSummary">
+                                <span class="area-main__contentsToolSummary--matching">98% 일치</span>
+                                <span class="area-main__contentsToolSummary--age">15</span>
+                                <span class="area-main__contentsToolSummary--season">시즌 2개</span>
+                                <span class="area-main__contentsToolSummary--resolution">HD</span>
+                            </p>
+                            <p class="area-main__contentsToolDescription">
+                                <span>진심 어린</span>
+                                <span>감정을 파고드든</span>
+                                <span>로맨틱</span>
+                            </p>
+                        </div>
+                    </div>
                 </li>
                 <!-- // list item -->
                 <!-- // list item -->
                 <li class="area-main__contentsItem" role="listitem">
-                    <h4 class="blind" role="heading">contents - 06</h4>
-                    <a href="javascirpt:void(0)" title="인기 콘텐츠 예시 06 바로가기" role="link">
-                        <img src="https://source.unsplash.com/random/1920x1080/?movie" alt="인기 콘텐츠 이미지 예시 06">
-                    </a>
-                    <p>
-                        <span>새로운 에피소드</span>
-                        <span>지금 시청하기</span>
-                    </p>
+                    <div class="area-main__contentsItemBox">
+                        <h4 class="blind" role="heading">contents - 06</h4>
+                        <div class="area-main__contentsItemViewBox">
+                            <img src="https://source.unsplash.com/random/1920x1080/?movie" alt="인기 콘텐츠 이미지 예시 06">
+                        </div>
+                        <p class="area-main__contentsItemStatus">
+                            <span>새로운 에피소드</span>
+                            <span>지금 시청하기</span>
+                        </p>
+                        <div class="area-main__contentsTool">
+                            <div class="area-main__contentsToolBtnWrap">
+                                <div class="area-main__contentsToolBtnRight">
+                                    <button type="button" class="area-main__contentsToolBtn area-main__contentsToolBtn--play"><span class="material-icons">play_arrow</span></button>
+                                    <button type="button" class="area-main__contentsToolBtn"><span class="material-icons">done</span></button>
+                                    <button type="button" class="area-main__contentsToolBtn area-main__contentsToolBtn--hand"><span class="material-icons">thumb_up</span></button>
+                                    <button type="button" class="area-main__contentsToolBtn area-main__contentsToolBtn--hand"><span class="material-icons">thumb_down</span></button>
+                                </div>
+                                <button type="button" class="area-main__contentsToolBtn"><span class="material-icons">keyboard_arrow_down</span></button>
+                            </div>
+                            <p class="area-main__contentsToolSummary">
+                                <span class="area-main__contentsToolSummary--matching">98% 일치</span>
+                                <span class="area-main__contentsToolSummary--age">15</span>
+                                <span class="area-main__contentsToolSummary--season">시즌 2개</span>
+                                <span class="area-main__contentsToolSummary--resolution">HD</span>
+                            </p>
+                            <p class="area-main__contentsToolDescription">
+                                <span>진심 어린</span>
+                                <span>감정을 파고드든</span>
+                                <span>로맨틱</span>
+                            </p>
+                        </div>
+                    </div>
                 </li>
                 <!-- // list item -->
                 <!-- // list item -->
                 <li class="area-main__contentsItem" role="listitem">
-                    <h4 class="blind" role="heading">contents - 07</h4>
-                    <a href="javascirpt:void(0)" title="인기 콘텐츠 예시 07 바로가기" role="link">
-                        <img src="https://source.unsplash.com/random/1920x1080/?teenage" alt="인기 콘텐츠 이미지 예시 07">
-                    </a>
-                    <p>
-                        <span>새로운 에피소드</span>
-                        <span>지금 시청하기</span>
-                    </p>
+                    <div class="area-main__contentsItemBox">
+                        <h4 class="blind" role="heading">contents - 07</h4>
+                        <div class="area-main__contentsItemViewBox">
+                            <img src="https://source.unsplash.com/random/1920x1080/?teenage" alt="인기 콘텐츠 이미지 예시 07">
+                        </div>
+                        <p class="area-main__contentsItemStatus">
+                            <span>새로운 에피소드</span>
+                            <span>지금 시청하기</span>
+                        </p>
+                        <div class="area-main__contentsTool">
+                            <div class="area-main__contentsToolBtnWrap">
+                                <div class="area-main__contentsToolBtnRight">
+                                    <button type="button" class="area-main__contentsToolBtn area-main__contentsToolBtn--play"><span class="material-icons">play_arrow</span></button>
+                                    <button type="button" class="area-main__contentsToolBtn"><span class="material-icons">done</span></button>
+                                    <button type="button" class="area-main__contentsToolBtn area-main__contentsToolBtn--hand"><span class="material-icons">thumb_up</span></button>
+                                    <button type="button" class="area-main__contentsToolBtn area-main__contentsToolBtn--hand"><span class="material-icons">thumb_down</span></button>
+                                </div>
+                                <button type="button" class="area-main__contentsToolBtn"><span class="material-icons">keyboard_arrow_down</span></button>
+                            </div>
+                            <p class="area-main__contentsToolSummary">
+                                <span class="area-main__contentsToolSummary--matching">98% 일치</span>
+                                <span class="area-main__contentsToolSummary--age">15</span>
+                                <span class="area-main__contentsToolSummary--season">시즌 2개</span>
+                                <span class="area-main__contentsToolSummary--resolution">HD</span>
+                            </p>
+                            <p class="area-main__contentsToolDescription">
+                                <span>진심 어린</span>
+                                <span>감정을 파고드든</span>
+                                <span>로맨틱</span>
+                            </p>
+                        </div>
+                    </div>
                 </li>
                 <!-- // list item -->
                 <!-- // list item -->
                 <li class="area-main__contentsItem" role="listitem">
-                    <h4 class="blind" role="heading">contents - 08</h4>
-                    <a href="javascirpt:void(0)" title="인기 콘텐츠 예시 08 바로가기" role="link">
-                        <img src="https://source.unsplash.com/random/1920x1080/?nature" alt="인기 콘텐츠 이미지 예시 08">
-                    </a>
-                    <p>
-                        <span>새로운 에피소드</span>
-                        <span>지금 시청하기</span>
-                    </p>
+                    <div class="area-main__contentsItemBox">
+                        <h4 class="blind" role="heading">contents - 08</h4>
+                        <div class="area-main__contentsItemViewBox">
+                            <img src="https://source.unsplash.com/random/1920x1080/?nature" alt="인기 콘텐츠 이미지 예시 08">
+                        </div>
+                        <p class="area-main__contentsItemStatus">
+                            <span>새로운 에피소드</span>
+                            <span>지금 시청하기</span>
+                        </p>
+                        <div class="area-main__contentsTool">
+                            <div class="area-main__contentsToolBtnWrap">
+                                <div class="area-main__contentsToolBtnRight">
+                                    <button type="button" class="area-main__contentsToolBtn area-main__contentsToolBtn--play"><span class="material-icons">play_arrow</span></button>
+                                    <button type="button" class="area-main__contentsToolBtn"><span class="material-icons">done</span></button>
+                                    <button type="button" class="area-main__contentsToolBtn area-main__contentsToolBtn--hand"><span class="material-icons">thumb_up</span></button>
+                                    <button type="button" class="area-main__contentsToolBtn area-main__contentsToolBtn--hand"><span class="material-icons">thumb_down</span></button>
+                                </div>
+                                <button type="button" class="area-main__contentsToolBtn"><span class="material-icons">keyboard_arrow_down</span></button>
+                            </div>
+                            <p class="area-main__contentsToolSummary">
+                                <span class="area-main__contentsToolSummary--matching">98% 일치</span>
+                                <span class="area-main__contentsToolSummary--age">15</span>
+                                <span class="area-main__contentsToolSummary--season">시즌 2개</span>
+                                <span class="area-main__contentsToolSummary--resolution">HD</span>
+                            </p>
+                            <p class="area-main__contentsToolDescription">
+                                <span>진심 어린</span>
+                                <span>감정을 파고드든</span>
+                                <span>로맨틱</span>
+                            </p>
+                        </div>
+                    </div>
                 </li>
                 <!-- // list item -->
                 <!-- // list item -->
                 <li class="area-main__contentsItem" role="listitem">
-                    <h4 class="blind" role="heading">contents - 09</h4>
-                    <a href="javascirpt:void(0)" title="인기 콘텐츠 예시 09 바로가기" role="link">
-                        <img src="https://source.unsplash.com/random/1920x1080/?savannah" alt="인기 콘텐츠 이미지 예시 09">
-                    </a>
-                    <p>
-                        <span>새로운 에피소드</span>
-                        <span>지금 시청하기</span>
-                    </p>
+                    <div class="area-main__contentsItemBox">
+                        <h4 class="blind" role="heading">contents - 09</h4>
+                        <div class="area-main__contentsItemViewBox">
+                            <img src="https://source.unsplash.com/random/1920x1080/?savannah" alt="인기 콘텐츠 이미지 예시 09">
+                        </div>
+                        <p class="area-main__contentsItemStatus">
+                            <span>새로운 에피소드</span>
+                            <span>지금 시청하기</span>
+                        </p>
+                        <div class="area-main__contentsTool">
+                            <div class="area-main__contentsToolBtnWrap">
+                                <div class="area-main__contentsToolBtnRight">
+                                    <button type="button" class="area-main__contentsToolBtn area-main__contentsToolBtn--play"><span class="material-icons">play_arrow</span></button>
+                                    <button type="button" class="area-main__contentsToolBtn"><span class="material-icons">done</span></button>
+                                    <button type="button" class="area-main__contentsToolBtn area-main__contentsToolBtn--hand"><span class="material-icons">thumb_up</span></button>
+                                    <button type="button" class="area-main__contentsToolBtn area-main__contentsToolBtn--hand"><span class="material-icons">thumb_down</span></button>
+                                </div>
+                                <button type="button" class="area-main__contentsToolBtn"><span class="material-icons">keyboard_arrow_down</span></button>
+                            </div>
+                            <p class="area-main__contentsToolSummary">
+                                <span class="area-main__contentsToolSummary--matching">98% 일치</span>
+                                <span class="area-main__contentsToolSummary--age">15</span>
+                                <span class="area-main__contentsToolSummary--season">시즌 2개</span>
+                                <span class="area-main__contentsToolSummary--resolution">HD</span>
+                            </p>
+                            <p class="area-main__contentsToolDescription">
+                                <span>진심 어린</span>
+                                <span>감정을 파고드든</span>
+                                <span>로맨틱</span>
+                            </p>
+                        </div>
+                    </div>
                 </li>
                 <!-- // list item -->
                 <!-- // list item -->
                 <li class="area-main__contentsItem" role="listitem">
-                    <h4 class="blind" role="heading">contents - 10</h4>
-                    <a href="javascirpt:void(0)" title="인기 콘텐츠 예시 10 바로가기" role="link">
-                        <img src="https://source.unsplash.com/random/1920x1080/?city" alt="인기 콘텐츠 이미지 예시 10">
-                    </a>
-                    <p>
-                        <span>새로운 에피소드</span>
-                        <span>지금 시청하기</span>
-                    </p>
+                    <div class="area-main__contentsItemBox">
+                        <h4 class="blind" role="heading">contents - 10</h4>
+                        <div class="area-main__contentsItemViewBox">
+                            <img src="https://source.unsplash.com/random/1920x1080/?city" alt="인기 콘텐츠 이미지 예시 10">
+                        </div>
+                        <p class="area-main__contentsItemStatus">
+                            <span>새로운 에피소드</span>
+                            <span>지금 시청하기</span>
+                        </p>
+                        <div class="area-main__contentsTool">
+                            <div class="area-main__contentsToolBtnWrap">
+                                <div class="area-main__contentsToolBtnRight">
+                                    <button type="button" class="area-main__contentsToolBtn area-main__contentsToolBtn--play"><span class="material-icons">play_arrow</span></button>
+                                    <button type="button" class="area-main__contentsToolBtn"><span class="material-icons">done</span></button>
+                                    <button type="button" class="area-main__contentsToolBtn area-main__contentsToolBtn--hand"><span class="material-icons">thumb_up</span></button>
+                                    <button type="button" class="area-main__contentsToolBtn area-main__contentsToolBtn--hand"><span class="material-icons">thumb_down</span></button>
+                                </div>
+                                <button type="button" class="area-main__contentsToolBtn"><span class="material-icons">keyboard_arrow_down</span></button>
+                            </div>
+                            <p class="area-main__contentsToolSummary">
+                                <span class="area-main__contentsToolSummary--matching">98% 일치</span>
+                                <span class="area-main__contentsToolSummary--age">15</span>
+                                <span class="area-main__contentsToolSummary--season">시즌 2개</span>
+                                <span class="area-main__contentsToolSummary--resolution">HD</span>
+                            </p>
+                            <p class="area-main__contentsToolDescription">
+                                <span>진심 어린</span>
+                                <span>감정을 파고드든</span>
+                                <span>로맨틱</span>
+                            </p>
+                        </div>
+                    </div>
                 </li>
                 <!-- // list item -->
             </ul>
@@ -420,110 +691,128 @@
             <ul class="area-main__contentsList" role="list">
                 <!-- // list item -->
                 <li class="area-main__contentsItem" role="listitem">
-                    <h4 class="blind" role="heading">contents - 01</h4>
-                    <a href="javascirpt:void(0)" title="맞춤형 콘텐츠 예시 01 바로가기" role="link">
-                        <img src="https://source.unsplash.com/random/1920x1080/?horror" alt="맞춤형 콘텐츠 이미지 예시 01">
-                    </a>
-                    <p>
-                        <span>새로운 에피소드</span>
-                        <span>지금 시청하기</span>
-                    </p>
+                    <div class="area-main__contentsItemBox">
+                        <h4 class="blind" role="heading">contents - 01</h4>
+                        <div class="area-main__contentsItemViewBox">
+                            <img src="https://source.unsplash.com/random/1920x1080/?horror" alt="맞춤형 콘텐츠 이미지 예시 01">
+                        </div>
+                        <p class="area-main__contentsItemStatus">
+                            <span>새로운 에피소드</span>
+                            <span>지금 시청하기</span>
+                        </p>
+                    </div>
                 </li>
                 <!-- // list item -->
                 <!-- // list item -->
                 <li class="area-main__contentsItem" role="listitem">
-                    <h4 class="blind" role="heading">contents - 02</h4>
-                    <a href="javascirpt:void(0)" title="맞춤형 콘텐츠 예시 02 바로가기" role="link">
-                        <img src="https://source.unsplash.com/random/1920x1080/?gang" alt="맞춤형 콘텐츠 이미지 예시 02">
-                    </a>
-                    <p>
-                        <span>새로운 에피소드</span>
-                        <span>지금 시청하기</span>
-                    </p>
+                    <div class="area-main__contentsItemBox">
+                        <h4 class="blind" role="heading">contents - 02</h4>
+                        <div class="area-main__contentsItemViewBox">
+                            <img src="https://source.unsplash.com/random/1920x1080/?gang" alt="맞춤형 콘텐츠 이미지 예시 02">
+                        </div>
+                        <p class="area-main__contentsItemStatus">
+                            <span>새로운 에피소드</span>
+                            <span>지금 시청하기</span>
+                        </p>
+                    </div>
                 </li>
                 <!-- // list item -->
                 <!-- // list item -->
                 <li class="area-main__contentsItem" role="listitem">
-                    <h4 class="blind" role="heading">contents - 03</h4>
-                    <a href="javascirpt:void(0)" title="맞춤형 콘텐츠 예시 03 바로가기" role="link">
-                        <img src="https://source.unsplash.com/random/1920x1080/?animation" alt="맞춤형 콘텐츠 이미지 예시 03">
-                    </a>
-                    <p>
-                        <span>새로운 에피소드</span>
-                        <span>지금 시청하기</span>
-                    </p>
+                    <div class="area-main__contentsItemBox">
+                        <h4 class="blind" role="heading">contents - 03</h4>
+                        <div class="area-main__contentsItemViewBox">
+                            <img src="https://source.unsplash.com/random/1920x1080/?animation" alt="맞춤형 콘텐츠 이미지 예시 03">
+                        </div>
+                        <p class="area-main__contentsItemStatus">
+                            <span>새로운 에피소드</span>
+                            <span>지금 시청하기</span>
+                        </p>
+                    </div>
                 </li>
                 <!-- // list item -->
                 <!-- // list item -->
                 <li class="area-main__contentsItem" role="listitem">
-                    <h4 class="blind" role="heading">contents - 04</h4>
-                    <a href="javascirpt:void(0)" title="맞춤형 콘텐츠 예시 04 바로가기" role="link">
-                        <img src="https://source.unsplash.com/random/1920x1080/?court" alt="맞춤형 콘텐츠 이미지 예시 04">
-                    </a>
-                    <p>
-                        <span>새로운 에피소드</span>
-                        <span>지금 시청하기</span>
-                    </p>
+                    <div class="area-main__contentsItemBox">
+                        <h4 class="blind" role="heading">contents - 04</h4>
+                        <div class="area-main__contentsItemViewBox">
+                            <img src="https://source.unsplash.com/random/1920x1080/?court" alt="맞춤형 콘텐츠 이미지 예시 04">
+                        </div>
+                        <p class="area-main__contentsItemStatus">
+                            <span>새로운 에피소드</span>
+                            <span>지금 시청하기</span>
+                        </p>
+                    </div>
                 </li>
                 <!-- // list item -->
                 <!-- // list item -->
                 <li class="area-main__contentsItem" role="listitem">
-                    <h4 class="blind" role="heading">contents - 05</h4>
-                    <a href="javascirpt:void(0)" title="맞춤형 콘텐츠 예시 05 바로가기" role="link">
-                        <img src="https://source.unsplash.com/random/1920x1080/?basketball" alt="맞춤형 콘텐츠 이미지 예시 05">
-                    </a>
-                    <p>
-                        <span>새로운 에피소드</span>
-                        <span>지금 시청하기</span>
-                    </p>
+                    <div class="area-main__contentsItemBox">
+                        <h4 class="blind" role="heading">contents - 05</h4>
+                        <div class="area-main__contentsItemViewBox">
+                            <img src="https://source.unsplash.com/random/1920x1080/?basketball" alt="맞춤형 콘텐츠 이미지 예시 05">
+                        </div>
+                        <p class="area-main__contentsItemStatus">
+                            <span>새로운 에피소드</span>
+                            <span>지금 시청하기</span>
+                        </p>
+                    </div>
                 </li>
                 <!-- // list item -->
                 <!-- // list item -->
                 <li class="area-main__contentsItem" role="listitem">
-                    <h4 class="blind" role="heading">contents - 06</h4>
-                    <a href="javascirpt:void(0)" title="맞춤형 콘텐츠 예시 06 바로가기" role="link">
-                        <img src="https://source.unsplash.com/random/1920x1080/?baseball" alt="맞춤형 콘텐츠 이미지 예시 06">
-                    </a>
-                    <p>
-                        <span>새로운 에피소드</span>
-                        <span>지금 시청하기</span>
-                    </p>
+                    <div class="area-main__contentsItemBox">
+                        <h4 class="blind" role="heading">contents - 06</h4>
+                        <div class="area-main__contentsItemViewBox">
+                            <img src="https://source.unsplash.com/random/1920x1080/?baseball" alt="맞춤형 콘텐츠 이미지 예시 06">
+                        </div>
+                        <p class="area-main__contentsItemStatus">
+                            <span>새로운 에피소드</span>
+                            <span>지금 시청하기</span>
+                        </p>
+                    </div>
                 </li>
                 <!-- // list item -->
                 <!-- // list item -->
                 <li class="area-main__contentsItem" role="listitem">
-                    <h4 class="blind" role="heading">contents - 07</h4>
-                    <a href="javascirpt:void(0)" title="맞춤형 콘텐츠 예시 07 바로가기" role="link">
-                        <img src="https://source.unsplash.com/random/1920x1080/?action" alt="맞춤형 콘텐츠 이미지 예시 07">
-                    </a>
-                    <p>
-                        <span>새로운 에피소드</span>
-                        <span>지금 시청하기</span>
-                    </p>
+                    <div class="area-main__contentsItemBox">
+                        <h4 class="blind" role="heading">contents - 07</h4>
+                        <div class="area-main__contentsItemViewBox">
+                            <img src="https://source.unsplash.com/random/1920x1080/?action" alt="맞춤형 콘텐츠 이미지 예시 07">
+                        </div>
+                        <p class="area-main__contentsItemStatus">
+                            <span>새로운 에피소드</span>
+                            <span>지금 시청하기</span>
+                        </p>
+                    </div>
                 </li>
                 <!-- // list item -->
                 <!-- // list item -->
                 <li class="area-main__contentsItem" role="listitem">
-                    <h4 class="blind" role="heading">contents - 08</h4>
-                    <a href="javascirpt:void(0)" title="맞춤형 콘텐츠 예시 08 바로가기" role="link">
-                        <img src="https://source.unsplash.com/random/1920x1080/?adult" alt="맞춤형 콘텐츠 이미지 예시 08">
-                    </a>
-                    <p>
-                        <span>새로운 에피소드</span>
-                        <span>지금 시청하기</span>
-                    </p>
+                    <div class="area-main__contentsItemBox">
+                        <h4 class="blind" role="heading">contents - 08</h4>
+                        <div class="area-main__contentsItemViewBox">
+                            <img src="https://source.unsplash.com/random/1920x1080/?adult" alt="맞춤형 콘텐츠 이미지 예시 08">
+                        </div>
+                        <p class="area-main__contentsItemStatus">
+                            <span>새로운 에피소드</span>
+                            <span>지금 시청하기</span>
+                        </p>
+                    </div>
                 </li>
                 <!-- // list item -->
                 <!-- // list item -->
                 <li class="area-main__contentsItem" role="listitem">
-                    <h4 class="blind" role="heading">contents - 09</h4>
-                    <a href="javascirpt:void(0)" title="맞춤형 콘텐츠 예시 09 바로가기" role="link">
-                        <img src="https://source.unsplash.com/random/1920x1080/?video" alt="맞춤형 콘텐츠 이미지 예시 09">
-                    </a>
-                    <p>
-                        <span>새로운 에피소드</span>
-                        <span>지금 시청하기</span>
-                    </p>
+                    <div class="area-main__contentsItemBox">
+                        <h4 class="blind" role="heading">contents - 09</h4>
+                        <div class="area-main__contentsItemViewBox">
+                            <img src="https://source.unsplash.com/random/1920x1080/?video" alt="맞춤형 콘텐츠 이미지 예시 09">
+                        </div>
+                        <p class="area-main__contentsItemStatus">
+                            <span>새로운 에피소드</span>
+                            <span>지금 시청하기</span>
+                        </p>
+                    </div>
                 </li>
                 <!-- // list item -->
             </ul>
